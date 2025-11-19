@@ -3,6 +3,8 @@ const exitPopup = document.getElementById("exitPopup");
 const addFormStaff = document.getElementById("addFormStaff");
 const submitBtn = document.getElementById("submitBtn");
 const closeStaffPopup = document.getElementById("closeStaffPopup");
+let allUsers = [];
+
 exitPopup.addEventListener("click", () => {
     popup.classList.add("hidden");
 });
@@ -11,7 +13,7 @@ addFormStaff.addEventListener("click", () => {
 });
 closeStaffPopup.addEventListener("click", () => {
     document.getElementById("staffPopup").classList.add("hidden");
-})
+});
 document.getElementById("image-url").addEventListener("change", function () {
     const imageUrl = this.value;
     const imageElement = document.getElementById("image");
@@ -154,29 +156,41 @@ submitBtn.addEventListener("click", (e) => {
                                 Info
                             </button>
                             <button
-                                class="px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
                                 Delete
                             </button>
                         </div>
 `;
+    div.querySelector(".DeleteBtn").addEventListener("click", () => {
+        div.remove();
+    });
 
-    div.dataset.user = JSON.stringify(users);
+    allUsers.push(users);
 
+    console.log(allUsers);
     usersContainer.appendChild(div);
 });
-
 document.addEventListener("click", (e) => {
     const card = e.target.closest(".AddBtnToContainer");
     if (!card) return;
 
-    const user = JSON.parse(card.dataset.user);
+    const userIndex = Array.from(
+        document.getElementById("usersToAdd").children
+    ).indexOf(card);
+
+    if (userIndex === -1) return;
+
+    const user = allUsers[userIndex];
 
     document.getElementById("profileName").textContent = user.nom;
     document.getElementById("profileRole").textContent = user.role;
     document.getElementById("profilePhoto").src = user.photoUrl;
     document.getElementById("profileEmail").textContent = user.email;
     document.getElementById("profilePhone").textContent = user.phone;
+
     const profileExperiences = document.getElementById("profileExperiences");
+    profileExperiences.innerHTML = "";
+
     user.experiencesProf.forEach((exp) => {
         const expDiv = document.createElement("div");
         expDiv.className = "border p-2 rounded mb-2 bg-gray-50";
@@ -186,7 +200,7 @@ document.addEventListener("click", (e) => {
         <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
         <p><strong>Durée:</strong> ${exp.dateStart} → ${exp.dateEnd}</p>
         <p><strong>Description:</strong> ${exp.description}</p>
-    `;
+        `;
 
         profileExperiences.appendChild(expDiv);
     });
@@ -201,44 +215,83 @@ closeModal.addEventListener("click", () => {
     profileModal.classList.add("hidden");
 });
 
+const ReceptionBtn = document.getElementById("ReceptionBtn");
+const conferenceBtn = document.getElementById("conferenceBtn");
+const serveursBtn = document.getElementById("serveursBtn");
+const securiteBtn = document.getElementById("securiteBtn");
+const personnelBtn = document.getElementById("personnelBtn");
+const archivesBtn = document.getElementById("archivesBtn");
 
-document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".addStaffBtn");
-    if (!btn) return;
+ReceptionBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "Réception" || u.role === "Manager" || u.role === "Nettoyage" || u.role === "Visiteurs");
 
-    const addStaffToRoom = document.getElementById("addStaffToRoom");
-
-
-    addStaffToRoom.innerHTML = "";
-
-
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
     document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
 
-    const allUsers = document.querySelectorAll("#usersToAdd .AddBtnToContainer");
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
 
-    allUsers.forEach((card) => {
-        const user = JSON.parse(card.dataset.user);
-
-        const block = document.createElement("div");
-        block.className =
-            "AddBtnToContainer flex items-center justify-between px-4 py-3 border rounded-lg";
-
-        block.innerHTML = `
-            <div class="flex items-center gap-3">
-                <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
-                <div class="flex flex-col">
-                    <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
-                </div>
-            </div>
-
-
-                <button class="infoBtn px-3 py-1 rounded-md text-xs font-semibold text-green-600 border border-green-600 hover:bg-green-600 hover:text-white transition">
-                    Add
-                </button>
-
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
         `;
 
-        addStaffToRoom.appendChild(block);
+        container.appendChild(div);
+    });
+});
+
+
+
+
+
+
+conferenceBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "Réception" || u.role === "Manager" || u.role === "Nettoyage" || u.role === "Visiteurs" || u.role === "IT Technique" || u.role === "sécurité ");
+
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
+    document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
+        `;
+
+        container.appendChild(div);
     });
 });
 
@@ -249,3 +302,180 @@ document.addEventListener("click", (e) => {
 
 
 
+
+
+serveursBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "IT Technique" || u.role === "Manager" || u.role === "Nettoyage");
+
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
+    document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
+        `;
+
+        container.appendChild(div);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+securiteBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "Manager" || u.role === "Nettoyage" || u.role === "sécurité ");
+
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
+    document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
+        `;
+
+        container.appendChild(div);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+personnelBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "Manager" || u.role === "Nettoyage");
+
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
+    document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
+        `;
+
+        container.appendChild(div);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+archivesBtn.addEventListener("click", () => {
+    const filtered = allUsers.filter((u) => u.role === "Manager");
+
+    const container = document.getElementById("addStaffToRoom");
+    container.innerHTML = "";
+    document.getElementById("staffPopup").classList.remove("hidden");
+    filtered.forEach((user) => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="DeleteBtn px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>
+        `;
+
+        container.appendChild(div);
+    });
+});
