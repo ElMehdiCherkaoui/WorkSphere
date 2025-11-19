@@ -12,7 +12,7 @@ addFormStaff.addEventListener("click", () => {
 closeStaffPopup.addEventListener("click", () => {
     document.getElementById("staffPopup").classList.add("hidden");
 })
-document.getElementById("image-url").addEventListener("change", () => {
+document.getElementById("image-url").addEventListener("change", function () {
     const imageUrl = this.value;
     const imageElement = document.getElementById("image");
     if (imageUrl) {
@@ -57,6 +57,7 @@ addExperienceBtn.addEventListener("click", () => {
             <textarea name="description[]" class="w-full mt-1 px-3 py-2 border rounded-lg" rows="2" placeholder="Ex: Développement d’un site web..."></textarea>
         </div>
 
+        <!-- Remove button -->
         <button type="button" class="remove-experience mt-3 text-red-600 hover:underline">
             Supprimer cette expérience
         </button>
@@ -67,7 +68,6 @@ addExperienceBtn.addEventListener("click", () => {
         block.remove();
     });
 });
-
 
 submitBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -157,13 +157,13 @@ submitBtn.addEventListener("click", (e) => {
                                 class="px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
                                 Delete
                             </button>
-                        </div>`;
+                        </div>
+`;
 
     div.dataset.user = JSON.stringify(users);
 
     usersContainer.appendChild(div);
 });
-
 
 document.addEventListener("click", (e) => {
     const card = e.target.closest(".AddBtnToContainer");
@@ -193,3 +193,59 @@ document.addEventListener("click", (e) => {
 
     document.getElementById("profileModal").classList.remove("hidden");
 });
+
+const closeModal = document.getElementById("closeModal");
+closeModal.addEventListener("click", () => {
+    const profileExperiences = document.getElementById("profileExperiences");
+    profileExperiences.textContent = "";
+    profileModal.classList.add("hidden");
+});
+
+
+document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".addStaffBtn");
+    if (!btn) return;
+
+    const addStaffToRoom = document.getElementById("addStaffToRoom");
+
+
+    addStaffToRoom.innerHTML = "";
+
+
+    document.getElementById("staffPopup").classList.remove("hidden");
+
+    const allUsers = document.querySelectorAll("#usersToAdd .AddBtnToContainer");
+
+    allUsers.forEach((card) => {
+        const user = JSON.parse(card.dataset.user);
+
+        const block = document.createElement("div");
+        block.className =
+            "AddBtnToContainer flex items-center justify-between px-4 py-3 border rounded-lg";
+
+        block.innerHTML = `
+            <div class="flex items-center gap-3">
+                <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                <div class="flex flex-col">
+                    <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+                </div>
+            </div>
+
+
+                <button class="infoBtn px-3 py-1 rounded-md text-xs font-semibold text-green-600 border border-green-600 hover:bg-green-600 hover:text-white transition">
+                    Add
+                </button>
+
+        `;
+
+        addStaffToRoom.appendChild(block);
+    });
+});
+
+
+
+
+
+
+
+
