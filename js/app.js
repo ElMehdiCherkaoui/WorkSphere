@@ -12,7 +12,7 @@ addFormStaff.addEventListener("click", () => {
 closeStaffPopup.addEventListener("click", () => {
     document.getElementById("staffPopup").classList.add("hidden");
 })
-document.getElementById("image-url").addEventListener("change",  ()=> {
+document.getElementById("image-url").addEventListener("change", () => {
     const imageUrl = this.value;
     const imageElement = document.getElementById("image");
     if (imageUrl) {
@@ -66,4 +66,100 @@ addExperienceBtn.addEventListener("click", () => {
     block.querySelector(".remove-experience").addEventListener("click", () => {
         block.remove();
     });
+});
+
+
+submitBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const users = {
+        nom: document.getElementById("userNom").value,
+        role: document.getElementById("userRole").value,
+        photoUrl: document.getElementById("image-url").value,
+        email: document.getElementById("userEmail").value,
+        phone: document.getElementById("userPhone").value,
+        experiencesProf: [],
+    };
+
+    const experienceBlocks =
+        experienceContainer.querySelectorAll(".formExperience");
+
+    experienceBlocks.forEach((b, index) => {
+        let poste, entreprise, dateStart, dateEnd, description;
+
+        if (index === 0) {
+            poste = document.getElementById("userPost").value;
+            entreprise = document.getElementById("userEntreprise").value;
+            dateStart = document.getElementById("userDateStart").value;
+            dateEnd = document.getElementById("userDateEnd").value;
+            description = document.getElementById("userDescription").value;
+        } else {
+            poste = b.querySelector('input[name="poste[]"]').value;
+            entreprise = b.querySelector('input[name="entreprise[]"]').value;
+            dateStart = b.querySelector('input[name="start[]"]').value;
+            dateEnd = b.querySelector('input[name="end[]"]').value;
+            description = b.querySelector('textarea[name="description[]"]').value;
+        }
+
+        users.experiencesProf.push({
+            poste,
+            entreprise,
+            dateStart,
+            dateEnd,
+            description,
+        });
+
+        if (index === 0) {
+            document.getElementById("userPost").value = "";
+            document.getElementById("userEntreprise").value = "";
+            document.getElementById("userDateStart").value = "";
+            document.getElementById("userDateEnd").value = "";
+            document.getElementById("userDescription").value = "";
+        } else {
+            b.querySelector('input[name="poste[]"]').value = "";
+            b.querySelector('input[name="entreprise[]"]').value = "";
+            b.querySelector('input[name="start[]"]').value = "";
+            b.querySelector('input[name="end[]"]').value = "";
+            b.querySelector('textarea[name="description[]"]').value = "";
+        }
+    });
+    const removeButtons = document.querySelectorAll(".remove-experience");
+    removeButtons.forEach((btn) => btn.parentElement.remove());
+    console.log(users);
+    alert("Form data collected! Open console to see the object.");
+    popup.classList.add("hidden");
+    document.getElementById("userNom").value = "";
+    document.getElementById("userRole").value = "";
+    document.getElementById("image-url").value = "";
+    document.getElementById("userEmail").value = "";
+    document.getElementById("userPhone").value = "";
+
+    const usersContainer = document.getElementById("usersToAdd");
+
+    const div = document.createElement("div");
+    div.className =
+        "AddBtnToContainer flex items-center justify-between px-4 py-3 border rounded-lg";
+
+    div.innerHTML = `
+    <div class="flex items-center gap-3">
+                            <img src="${users.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-semibold text-gray-800">${users.nom}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button id="infoContainer"
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white transition">
+                                Info
+                            </button>
+                            <button
+                                class="px-3 py-1 rounded-md text-xs font-semibold text-red-600 border border-red-600 hover:bg-red-600 hover:text-white transition">
+                                Delete
+                            </button>
+                        </div>`;
+
+    div.dataset.user = JSON.stringify(users);
+
+    usersContainer.appendChild(div);
 });
