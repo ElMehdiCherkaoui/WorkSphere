@@ -163,3 +163,33 @@ submitBtn.addEventListener("click", (e) => {
 
     usersContainer.appendChild(div);
 });
+
+
+document.addEventListener("click", (e) => {
+    const card = e.target.closest(".AddBtnToContainer");
+    if (!card) return;
+
+    const user = JSON.parse(card.dataset.user);
+
+    document.getElementById("profileName").textContent = user.nom;
+    document.getElementById("profileRole").textContent = user.role;
+    document.getElementById("profilePhoto").src = user.photoUrl;
+    document.getElementById("profileEmail").textContent = user.email;
+    document.getElementById("profilePhone").textContent = user.phone;
+    const profileExperiences = document.getElementById("profileExperiences");
+    user.experiencesProf.forEach((exp) => {
+        const expDiv = document.createElement("div");
+        expDiv.className = "border p-2 rounded mb-2 bg-gray-50";
+
+        expDiv.innerHTML = `
+        <p><strong>Poste:</strong> ${exp.poste}</p>
+        <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
+        <p><strong>Durée:</strong> ${exp.dateStart} → ${exp.dateEnd}</p>
+        <p><strong>Description:</strong> ${exp.description}</p>
+    `;
+
+        profileExperiences.appendChild(expDiv);
+    });
+
+    document.getElementById("profileModal").classList.remove("hidden");
+});
