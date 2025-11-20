@@ -27,11 +27,17 @@ const personnelBtn = document.getElementById("personnelBtn");
 const archivesBtn = document.getElementById("archivesBtn");
 
 let allUsers = [];
+
 let counterReceptionBtn = 0;
+
 let counterConferenceBtn = 0;
+
 let counterServeursBtn = 0;
+
 let counterSecuriteBtn = 0;
+
 let counterPersonnelBtn = 0;
+
 let counterArchivesBtn = 0;
 
 exitPopup.addEventListener("click", () => {
@@ -308,6 +314,12 @@ ReceptionBtn.addEventListener("click", () => {
 		btn.addEventListener("click", () => {
 
 			if (counterReceptionBtn < 6) {
+
+				const Réceptionbgcolor = document.getElementById("Réceptionbgcolor");
+				Réceptionbgcolor.classList.remove("bg-red-100");
+				Réceptionbgcolor.classList.add("bg-green-100");
+
+
 				user.unssigned = false;
 
 				const saved = JSON.parse(localStorage.getItem("Users")) || [];
@@ -377,6 +389,10 @@ ReceptionBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterReceptionBtn--;
+					if (counterReceptionBtn === 0) {
+						Réceptionbgcolor.classList.add("bg-red-100");
+						Réceptionbgcolor.classList.remove("bg-green-100");
+					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
@@ -384,9 +400,11 @@ ReceptionBtn.addEventListener("click", () => {
 				reloadUnssignedUsers();
 				counterReceptionBtn++;
 			}
-			else {
+			else if (counterReceptionBtn > 6) {
 				alert("you reached the max in reception room");
+
 			}
+
 		});
 
 	});
@@ -431,7 +449,9 @@ conferenceBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-
+			const conférencebgcolor = document.getElementById("conférencebgcolor");
+			conférencebgcolor.classList.remove("bg-red-100");
+			conférencebgcolor.classList.add("bg-green-100");
 			if (counterConferenceBtn < 10) {
 
 				user.unssigned = false;
@@ -501,6 +521,10 @@ conferenceBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterConferenceBtn--;
+					if (counterConferenceBtn === 0) {
+						conférencebgcolor.classList.add("bg-red-100");
+						conférencebgcolor.classList.remove("bg-green-100");
+					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
@@ -549,6 +573,9 @@ serveursBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
+			const serveursbgcolor = document.getElementById("serveursbgcolor");
+			serveursbgcolor.classList.remove("bg-red-100");
+			serveursbgcolor.classList.add("bg-green-100");
 			if (counterServeursBtn < 3) {
 				user.unssigned = false;
 
@@ -616,6 +643,10 @@ serveursBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterServeursBtn--;
+					if (counterServeursBtn === 0) {
+						serveursbgcolor.classList.add("bg-red-100");
+						serveursbgcolor.classList.remove("bg-green-100");
+					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
@@ -662,6 +693,9 @@ securiteBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
+			const sécuritébgcolor = document.getElementById("sécuritébgcolor");
+			sécuritébgcolor.classList.remove("bg-red-100");
+			sécuritébgcolor.classList.add("bg-green-100");
 			if (counterSecuriteBtn < 2) {
 				user.unssigned = false;
 
@@ -729,6 +763,10 @@ securiteBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterSecuriteBtn--;
+					if (counterSecuriteBtn === 0) {
+						sécuritébgcolor.classList.add("bg-red-100");
+						sécuritébgcolor.classList.remove("bg-green-100");
+					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
@@ -774,6 +812,9 @@ personnelBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
+			const personnelbgcolor = document.getElementById("personnelbgcolor");
+			personnelbgcolor.classList.remove("bg-red-100");
+			personnelbgcolor.classList.add("bg-green-100");
 			if (counterPersonnelBtn < 2) {
 				user.unssigned = false;
 
@@ -841,6 +882,10 @@ personnelBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterPersonnelBtn--;
+					if (counterPersonnelBtn === 0) {
+						personnelbgcolor.classList.add("bg-red-100");
+						personnelbgcolor.classList.remove("bg-green-100");
+					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
@@ -885,81 +930,88 @@ archivesBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			if (counterArchivesBtn < 1){
+			const archivesbgcolor = document.getElementById("archivesbgcolor");
+			archivesbgcolor.classList.remove("bg-red-100");
+			archivesbgcolor.classList.add("bg-green-100");
+			if (counterArchivesBtn < 1) {
 				user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			const archivesContainer = document.getElementById("archivesContainer");
+				const archivesContainer = document.getElementById("archivesContainer");
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
 
-			item.innerHTML = `
+				item.innerHTML = `
                 <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room :Salle d’archives";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room :Salle d’archives";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
+						profileExp.appendChild(expDiv);
+					});
 				});
-			});
-			archivesContainer.appendChild(item);
+				archivesContainer.appendChild(item);
 
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterArchivesBtn--;
+					if (counterArchivesBtn === 0) {
+						archivesbgcolor.classList.add("bg-red-100");
+						archivesbgcolor.classList.remove("bg-green-100");
 					}
 				});
 
+				document.getElementById("staffPopup").classList.add("hidden");
 
-				localStorage.setItem("Users", JSON.stringify(saved));
 				reloadUnssignedUsers();
-				counterArchivesBtn--;
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
-			counterArchivesBtn++;
-		}
+				counterArchivesBtn++;
+			}
 			else {
 				alert("you reached the max in archive");
 			}
