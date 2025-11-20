@@ -141,7 +141,7 @@
         </main>
     </div>
     <section id="popup" class="hidden fixed inset-0 bg-black/30 flex items-start justify-center">
-        <div class="bg-white rounded-2xl w-[35em] shadow-xl p-6 mt-4">
+        <div class="bg-white rounded-2xl w-[35em] p-6 mt-4">
             <div class="flex justify-between items-center pb-3 mb-4">
                 <h2 class="text-xl font-bold text-gray-800">Ajouter un utilisateur</h2>
                 <button id="exitPopup" class="text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
@@ -250,7 +250,7 @@
         </div>
     </section>
     <div id="profileModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
-        <div class="bg-white p-4 rounded w-[400px]">
+        <div class="bg-white p-4 rounded w-[400px] overflow-auto max-h-[72vh]">
             <div class="flex justify-between items-center pb-3 mb-4">
                 <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
                 <button id="closeModal" class="text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
@@ -273,7 +273,7 @@
         </div>
     </div>
     <div class=" hidden fixed inset-0 bg-black/50 flex items-center justify-center" id="staffPopup">
-        <div class="bg-white p-4 rounded w-[50em]">
+        <div class="bg-white p-4 rounded w-[50em] overflow-auto max-h-[72vh]">
             <div class="flex justify-between items-center pb-3 mb-4">
                 <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
                 <button id="closeStaffPopup"

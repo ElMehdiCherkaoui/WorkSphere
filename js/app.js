@@ -27,6 +27,12 @@ const personnelBtn = document.getElementById("personnelBtn");
 const archivesBtn = document.getElementById("archivesBtn");
 
 let allUsers = [];
+let counterReceptionBtn = 0;
+let counterConferenceBtn = 0;
+let counterServeursBtn = 0;
+let counterSecuriteBtn = 0;
+let counterPersonnelBtn = 0;
+let counterArchivesBtn = 0;
 
 exitPopup.addEventListener("click", () => {
 	popup.classList.add("hidden");
@@ -123,21 +129,21 @@ reloadUnssignedUsers();
 
 submitBtn.addEventListener("click", (e) => {
 	e.preventDefault();
-	
+
 	let emailre = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 	let phonere = /^\+?\d{10,15}$/;
 
 	let urlR = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
 
-	let nomR = /^\w\D\s$/;
+	let nomR = /^[A-Za-z]+$/;
 
-	if (!nomR.test(document.getElementById("userNom").value.trim() === "")) {
+	if (!nomR.test(document.getElementById("userNom").value === "")) {
 		alert("invalid nom");
 		return;
 	}
 
-	if (document.getElementById("userRole").value.trim() === "") {
+	if (document.getElementById("userRole").value === "") {
 		alert("Select the role");
 		return;
 	}
@@ -191,13 +197,16 @@ submitBtn.addEventListener("click", (e) => {
 
 		let descriptionre = /^[\w\s.,!?'-]{1,500}$/;
 
-		let postere = /^\w{1,50}$/;
 
-		let entreprisere = /^\w{50}$/;
+		let postere = /^[A-Za-z\s-]{1,50}$/;
+
+
+		let entreprisere = /^[A-Za-z0-9\s-]{1,50}$/;
 
 
 		if (!postere.test(poste)) {
 			alert("poste is invalid");
+			preventDefault();
 			return;
 		}
 		if (!entreprisere.test(entreprise)) {
@@ -261,6 +270,7 @@ closeModal.addEventListener("click", () => {
 });
 
 ReceptionBtn.addEventListener("click", () => {
+
 	const filtered = allUsers.filter(
 		(u) =>
 			u.unssigned === true &&
@@ -296,80 +306,89 @@ ReceptionBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+			if (counterReceptionBtn < 6) {
+				user.unssigned = false;
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			const receptionContainer = document.getElementById("receptionContainer");
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				const receptionContainer = document.getElementById("receptionContainer");
 
-			item.innerHTML = `
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+
+				item.innerHTML = `
                 <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
     
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room : Reception";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room : Reception";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
-				});
-			});
-
-
-			receptionContainer.appendChild(item);
-
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
-					}
+						profileExp.appendChild(expDiv);
+					});
 				});
 
-				localStorage.setItem("Users", JSON.stringify(saved));
+
+				receptionContainer.appendChild(item);
+
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterReceptionBtn--;
+				});
+
+				document.getElementById("staffPopup").classList.add("hidden");
+
 				reloadUnssignedUsers();
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
+				counterReceptionBtn++;
+			}
+			else {
+				alert("you reached the max in reception room");
+			}
 		});
+
 	});
 });
 
@@ -386,7 +405,9 @@ conferenceBtn.addEventListener("click", () => {
 	);
 
 	const container = document.getElementById("addStaffToRoom");
+
 	container.innerHTML = "";
+
 	document.getElementById("staffPopup").classList.remove("hidden");
 
 	filtered.forEach((user) => {
@@ -410,79 +431,86 @@ conferenceBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+			if (counterConferenceBtn < 10) {
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				user.unssigned = false;
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			const conférenceContainer = document.getElementById(
-				"conférenceContainer"
-			);
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			item.innerHTML = `
-                <img src="${user.photoUrl}" class="w-6 h-6 rounded-full border">
+				const conférenceContainer = document.getElementById("conférenceContainer");
+
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+
+				item.innerHTML = `
+                <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room :Salle de conférence";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room :Salle de conférence";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
-				});
-			});
-
-			conférenceContainer.appendChild(item);
-
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
-					}
+						profileExp.appendChild(expDiv);
+					});
 				});
 
-				localStorage.setItem("Users", JSON.stringify(saved));
+				conférenceContainer.appendChild(item);
+
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterConferenceBtn--;
+				});
+
+				document.getElementById("staffPopup").classList.add("hidden");
+
 				reloadUnssignedUsers();
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
+				counterConferenceBtn++;
+			}
+			else {
+				alert("you reached the max in conference room");
+			}
 		});
 	});
 });
@@ -521,76 +549,83 @@ serveursBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
+			if (counterServeursBtn < 3) {
+				user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			const serveursContainer = document.getElementById("serveursContainer");
+				const serveursContainer = document.getElementById("serveursContainer");
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
 
-			item.innerHTML = `
-                <img src="${user.photoUrl}" class="w-6 h-6 rounded-full border">
+				item.innerHTML = `
+                <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room :Salle des serveurs";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room :Salle des serveurs";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
+						profileExp.appendChild(expDiv);
+					});
 				});
-			});
-			serveursContainer.appendChild(item);
+				serveursContainer.appendChild(item);
 
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
-					}
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterServeursBtn--;
 				});
 
-				localStorage.setItem("Users", JSON.stringify(saved));
+				document.getElementById("staffPopup").classList.add("hidden");
+
 				reloadUnssignedUsers();
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
+				counterServeursBtn++;
+			}
+			else {
+				alert("you reached the max in Serveurs room");
+			}
 		});
 	});
 });
@@ -627,76 +662,83 @@ securiteBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
+			if (counterSecuriteBtn < 2) {
+				user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			const sécuritéContainer = document.getElementById("sécuritéContainer");
+				const sécuritéContainer = document.getElementById("sécuritéContainer");
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
 
-			item.innerHTML = `
-                <img src="${user.photoUrl}" class="w-6 h-6 rounded-full border">
+				item.innerHTML = `
+                <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room :Salle de sécurité";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room :Salle de sécurité";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
+						profileExp.appendChild(expDiv);
+					});
 				});
-			});
-			sécuritéContainer.appendChild(item);
+				sécuritéContainer.appendChild(item);
 
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
-					}
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterSecuriteBtn--;
 				});
 
-				localStorage.setItem("Users", JSON.stringify(saved));
+				document.getElementById("staffPopup").classList.add("hidden");
+
 				reloadUnssignedUsers();
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
+				counterSecuriteBtn++;
+			}
+			else {
+				alert("you reached the max in securite room");
+			}
 		});
 	});
 });
@@ -732,76 +774,83 @@ personnelBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
+			if (counterPersonnelBtn < 2) {
+				user.unssigned = false;
 
-			const saved = JSON.parse(localStorage.getItem("Users")) || [];
+				const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
-			saved.forEach((u) => {
-				if (u.email === user.email) {
-					u.unssigned = false;
-				}
-			});
+				saved.forEach((u) => {
+					if (u.email === user.email) {
+						u.unssigned = false;
+					}
+				});
 
-			localStorage.setItem("Users", JSON.stringify(saved));
+				localStorage.setItem("Users", JSON.stringify(saved));
 
-			const personnelContainer = document.getElementById("personnelContainer");
+				const personnelContainer = document.getElementById("personnelContainer");
 
-			const item = document.createElement("div");
-			item.className =
-				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
+				const item = document.createElement("div");
+				item.className =
+					"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
 
-			item.innerHTML = `
-                <img src="${user.photoUrl}" class="w-6 h-6 rounded-full border">
+				item.innerHTML = `
+                <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
-			const InfoContainer = item.querySelector(".InfoContainer");
+				const InfoContainer = item.querySelector(".InfoContainer");
 
-			InfoContainer.addEventListener("click", () => {
-				const profileModal = document.getElementById("profileModal");
-				profileModal.classList.remove("hidden");
-				document.getElementById("profileRoom").textContent = "Room :Salle du personnel";
-				document.getElementById("profilePhoto").src = user.photoUrl;
-				document.getElementById("profileName").textContent = user.nom;
-				document.getElementById("profileRole").textContent = user.role;
-				document.getElementById("profileEmail").textContent = user.email;
-				document.getElementById("profilePhone").textContent = user.phone;
+				InfoContainer.addEventListener("click", () => {
+					const profileModal = document.getElementById("profileModal");
+					profileModal.classList.remove("hidden");
+					document.getElementById("profileRoom").textContent = "Room :Salle du personnel";
+					document.getElementById("profilePhoto").src = user.photoUrl;
+					document.getElementById("profileName").textContent = user.nom;
+					document.getElementById("profileRole").textContent = user.role;
+					document.getElementById("profileEmail").textContent = user.email;
+					document.getElementById("profilePhone").textContent = user.phone;
 
-				const profileExp = document.getElementById("profileExperiences");
-				profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-				user.experiencesProf.forEach(exp => {
-					const expDiv = document.createElement("div");
-					expDiv.classList.add("mb-2");
+					const profileExp = document.getElementById("profileExperiences");
+					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
+					user.experiencesProf.forEach(exp => {
+						const expDiv = document.createElement("div");
+						expDiv.classList.add("mb-2");
 
-					expDiv.innerHTML = `
+						expDiv.innerHTML = `
                     <p><strong>Poste:</strong> ${exp.poste}</p>
                     <p><strong>Entreprise:</strong> ${exp.entreprise}</p>
                     <p><strong>Période:</strong> ${exp.dateStart} - ${exp.dateEnd}</p>
                     <p><strong>Description:</strong> ${exp.description}</p>
                     `;
 
-					profileExp.appendChild(expDiv);
+						profileExp.appendChild(expDiv);
+					});
 				});
-			});
-			personnelContainer.appendChild(item);
+				personnelContainer.appendChild(item);
 
-			item.querySelector(".removeStaff").addEventListener("click", () => {
-				item.remove();
-				user.unssigned = true;
-				const saved = JSON.parse(localStorage.getItem("Users")) || [];
-				saved.forEach((u) => {
-					if (u.email === user.email) {
-						u.unssigned = true;
-					}
+				item.querySelector(".removeStaff").addEventListener("click", () => {
+					item.remove();
+					user.unssigned = true;
+					const saved = JSON.parse(localStorage.getItem("Users")) || [];
+					saved.forEach((u) => {
+						if (u.email === user.email) {
+							u.unssigned = true;
+						}
+					});
+
+					localStorage.setItem("Users", JSON.stringify(saved));
+					reloadUnssignedUsers();
+					counterPersonnelBtn--;
 				});
 
-				localStorage.setItem("Users", JSON.stringify(saved));
+				document.getElementById("staffPopup").classList.add("hidden");
+
 				reloadUnssignedUsers();
-			});
-
-			document.getElementById("staffPopup").classList.add("hidden");
-
-			reloadUnssignedUsers();
+				counterPersonnelBtn++;
+			}
+			else {
+				alert("you reached the max in personnel room");
+			}
 		});
 	});
 });
@@ -836,7 +885,8 @@ archivesBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			user.unssigned = false;
+			if (counterArchivesBtn < 1){
+				user.unssigned = false;
 
 			const saved = JSON.parse(localStorage.getItem("Users")) || [];
 
@@ -855,7 +905,7 @@ archivesBtn.addEventListener("click", () => {
 				"flex items-center gap-2 bg-gray-100 p-1 rounded shadow-sm";
 
 			item.innerHTML = `
-                <img src="${user.photoUrl}" class="w-6 h-6 rounded-full border">
+                <img src="${user.photoUrl}" class="InfoContainer w-6 h-6 rounded-full border">
                 <span class="text-sm font-medium text-gray-800 truncate">${user.nom}</span>
                 <button class="removeStaff text-red-500 font-bold px-1 hover:text-red-700">-</button>
             `;
@@ -902,11 +952,17 @@ archivesBtn.addEventListener("click", () => {
 
 				localStorage.setItem("Users", JSON.stringify(saved));
 				reloadUnssignedUsers();
+				counterArchivesBtn--;
 			});
 
 			document.getElementById("staffPopup").classList.add("hidden");
 
 			reloadUnssignedUsers();
+			counterArchivesBtn++;
+		}
+			else {
+				alert("you reached the max in archive");
+			}
 		});
 	});
 });
