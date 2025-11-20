@@ -140,7 +140,8 @@ submitBtn.addEventListener("click", (e) => {
 
 	let phonere = /^\+?\d{10,15}$/;
 
-	let urlR = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+	let urlR =
+		/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
 
 	let nomR = /^[A-Za-z]+$/;
 
@@ -169,7 +170,6 @@ submitBtn.addEventListener("click", (e) => {
 		return;
 	}
 
-
 	const users = {
 		nom: document.getElementById("userNom").value,
 		role: document.getElementById("userRole").value,
@@ -180,12 +180,11 @@ submitBtn.addEventListener("click", (e) => {
 		unssigned: true,
 	};
 
-	const experienceBlocks = experienceContainer.querySelectorAll(".formExperience");
+	const experienceBlocks =
+		experienceContainer.querySelectorAll(".formExperience");
 
 	experienceBlocks.forEach((b, index) => {
 		let poste, entreprise, dateStart, dateEnd, description;
-
-
 
 		if (index === 0) {
 			poste = document.getElementById("userPost").value;
@@ -203,12 +202,9 @@ submitBtn.addEventListener("click", (e) => {
 
 		let descriptionre = /^[\w\s.,!?'-]{1,500}$/;
 
-
 		let postere = /^[A-Za-z\s-]{1,50}$/;
 
-
 		let entreprisere = /^[A-Za-z0-9\s-]{1,50}$/;
-
 
 		if (!postere.test(poste)) {
 			alert("poste is invalid");
@@ -276,7 +272,6 @@ closeModal.addEventListener("click", () => {
 });
 
 ReceptionBtn.addEventListener("click", () => {
-
 	const filtered = allUsers.filter(
 		(u) =>
 			u.unssigned === true &&
@@ -312,13 +307,10 @@ ReceptionBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-
 			if (counterReceptionBtn < 6) {
-
 				const Réceptionbgcolor = document.getElementById("Réceptionbgcolor");
 				Réceptionbgcolor.classList.remove("bg-red-100");
 				Réceptionbgcolor.classList.add("bg-green-100");
-
 
 				user.unssigned = false;
 
@@ -332,7 +324,8 @@ ReceptionBtn.addEventListener("click", () => {
 
 				localStorage.setItem("Users", JSON.stringify(saved));
 
-				const receptionContainer = document.getElementById("receptionContainer");
+				const receptionContainer =
+					document.getElementById("receptionContainer");
 
 				const item = document.createElement("div");
 				item.className =
@@ -349,7 +342,8 @@ ReceptionBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room : Reception";
+					document.getElementById("profileRoom").textContent =
+						"Room : Reception";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -358,7 +352,7 @@ ReceptionBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -372,7 +366,6 @@ ReceptionBtn.addEventListener("click", () => {
 						profileExp.appendChild(expDiv);
 					});
 				});
-
 
 				receptionContainer.appendChild(item);
 
@@ -399,14 +392,10 @@ ReceptionBtn.addEventListener("click", () => {
 
 				reloadUnssignedUsers();
 				counterReceptionBtn++;
-			}
-			else if (counterReceptionBtn > 6) {
+			} else if (counterReceptionBtn > 6) {
 				alert("you reached the max in reception room");
-
 			}
-
 		});
-
 	});
 });
 
@@ -449,11 +438,7 @@ conferenceBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			const conférencebgcolor = document.getElementById("conférencebgcolor");
-			conférencebgcolor.classList.remove("bg-red-100");
-			conférencebgcolor.classList.add("bg-green-100");
 			if (counterConferenceBtn < 10) {
-
 				user.unssigned = false;
 
 				const saved = JSON.parse(localStorage.getItem("Users")) || [];
@@ -466,7 +451,9 @@ conferenceBtn.addEventListener("click", () => {
 
 				localStorage.setItem("Users", JSON.stringify(saved));
 
-				const conférenceContainer = document.getElementById("conférenceContainer");
+				const conférenceContainer = document.getElementById(
+					"conférenceContainer"
+				);
 
 				const item = document.createElement("div");
 				item.className =
@@ -482,7 +469,8 @@ conferenceBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room :Salle de conférence";
+					document.getElementById("profileRoom").textContent =
+						"Room :Salle de conférence";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -491,7 +479,7 @@ conferenceBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -521,18 +509,13 @@ conferenceBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterConferenceBtn--;
-					if (counterConferenceBtn === 0) {
-						conférencebgcolor.classList.add("bg-red-100");
-						conférencebgcolor.classList.remove("bg-green-100");
-					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
 
 				reloadUnssignedUsers();
 				counterConferenceBtn++;
-			}
-			else {
+			} else {
 				alert("you reached the max in conference room");
 			}
 		});
@@ -605,7 +588,8 @@ serveursBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room :Salle des serveurs";
+					document.getElementById("profileRoom").textContent =
+						"Room :Salle des serveurs";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -614,7 +598,7 @@ serveursBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -653,8 +637,7 @@ serveursBtn.addEventListener("click", () => {
 
 				reloadUnssignedUsers();
 				counterServeursBtn++;
-			}
-			else {
+			} else {
 				alert("you reached the max in Serveurs room");
 			}
 		});
@@ -725,7 +708,8 @@ securiteBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room :Salle de sécurité";
+					document.getElementById("profileRoom").textContent =
+						"Room :Salle de sécurité";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -734,7 +718,7 @@ securiteBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -773,8 +757,7 @@ securiteBtn.addEventListener("click", () => {
 
 				reloadUnssignedUsers();
 				counterSecuriteBtn++;
-			}
-			else {
+			} else {
 				alert("you reached the max in securite room");
 			}
 		});
@@ -812,9 +795,6 @@ personnelBtn.addEventListener("click", () => {
 		const btn = div.querySelector(".addToRoomBtn");
 
 		btn.addEventListener("click", () => {
-			const personnelbgcolor = document.getElementById("personnelbgcolor");
-			personnelbgcolor.classList.remove("bg-red-100");
-			personnelbgcolor.classList.add("bg-green-100");
 			if (counterPersonnelBtn < 2) {
 				user.unssigned = false;
 
@@ -828,7 +808,8 @@ personnelBtn.addEventListener("click", () => {
 
 				localStorage.setItem("Users", JSON.stringify(saved));
 
-				const personnelContainer = document.getElementById("personnelContainer");
+				const personnelContainer =
+					document.getElementById("personnelContainer");
 
 				const item = document.createElement("div");
 				item.className =
@@ -844,7 +825,8 @@ personnelBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room :Salle du personnel";
+					document.getElementById("profileRoom").textContent =
+						"Room :Salle du personnel";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -853,7 +835,7 @@ personnelBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -882,18 +864,13 @@ personnelBtn.addEventListener("click", () => {
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterPersonnelBtn--;
-					if (counterPersonnelBtn === 0) {
-						personnelbgcolor.classList.add("bg-red-100");
-						personnelbgcolor.classList.remove("bg-green-100");
-					}
 				});
 
 				document.getElementById("staffPopup").classList.add("hidden");
 
 				reloadUnssignedUsers();
 				counterPersonnelBtn++;
-			}
-			else {
+			} else {
 				alert("you reached the max in personnel room");
 			}
 		});
@@ -962,7 +939,8 @@ archivesBtn.addEventListener("click", () => {
 				InfoContainer.addEventListener("click", () => {
 					const profileModal = document.getElementById("profileModal");
 					profileModal.classList.remove("hidden");
-					document.getElementById("profileRoom").textContent = "Room :Salle d’archives";
+					document.getElementById("profileRoom").textContent =
+						"Room :Salle d’archives";
 					document.getElementById("profilePhoto").src = user.photoUrl;
 					document.getElementById("profileName").textContent = user.nom;
 					document.getElementById("profileRole").textContent = user.role;
@@ -971,7 +949,7 @@ archivesBtn.addEventListener("click", () => {
 
 					const profileExp = document.getElementById("profileExperiences");
 					profileExp.innerHTML = "<h3 class='font-bold'>Expériences</h3>";
-					user.experiencesProf.forEach(exp => {
+					user.experiencesProf.forEach((exp) => {
 						const expDiv = document.createElement("div");
 						expDiv.classList.add("mb-2");
 
@@ -997,7 +975,6 @@ archivesBtn.addEventListener("click", () => {
 						}
 					});
 
-
 					localStorage.setItem("Users", JSON.stringify(saved));
 					reloadUnssignedUsers();
 					counterArchivesBtn--;
@@ -1011,8 +988,7 @@ archivesBtn.addEventListener("click", () => {
 
 				reloadUnssignedUsers();
 				counterArchivesBtn++;
-			}
-			else {
+			} else {
 				alert("you reached the max in archive");
 			}
 		});

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -9,78 +9,62 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-
 <body class="bg-gray-100">
-    <div class=" p-4">
-
+    <div class="p-4">
         <main class="flex flex-col lg:flex-row gap-4">
-
             <aside class="w-full lg:w-[28em] bg-white rounded p-4 gap-3" id="user">
-                <div class="flex items-center justify-between ">
-                    <h2 class="text-sm font-bold ">Unassigned Staff</h2>
-                    <button id="addFormStaff" class="px-3 py-1 rounded bg-indigo-600 text-white text-xs">Add</button>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-bold">Unassigned Staff</h2>
+                    <button id="addFormStaff" class="px-3 py-1 rounded bg-indigo-600 text-white text-xs">
+                        Add
+                    </button>
                 </div>
 
-                <div class="mt-4 space-y-3 overflow-auto max-h-[72vh]" id="usersToAdd">
-
-
-
-                </div>
-
+                <div class="mt-4 space-y-3 overflow-auto max-h-[72vh]" id="usersToAdd"></div>
             </aside>
 
-
-            <section class="xl:w-full ">
-                <div class="bg-white rounded shadow p-3 h-[40em] md:h-[82vh] ">
-
+            <section class="xl:w-full">
+                <div class="bg-white rounded shadow p-3 h-[40em] md:h-[82vh]">
                     <div class="grid grid-cols-6 grid-rows-12 h-full md:grid-cols-11 md:grid-rows-6 bg-black/10">
-
                         <div id="Réceptionbgcolor"
                             class="col-span-2 row-span-4 md:col-span-5 md:row-span-2 border-8 border-red-600 flex items-center justify-center bg-red-100">
                             <div>
-                                <div><span>Réception</span>
-                                    <button id="ReceptionBtn"
-                                        class=" ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                <div>
+                                    <span>Réception</span>
+                                    <button id="ReceptionBtn" class="ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
-                                <div id="receptionContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-                                </div>
-
-
-
+                                <div id="receptionContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full"></div>
                             </div>
                         </div>
 
-                        <div id="conférencebgcolor"
-                            class="col-start-3 col-end-8 row-span-4 md:col-start-1 md:col-end-6 md:row-start-3 md:row-end-7 border-8 border-green-600 flex items-center justify-center bg-red-100">
+                        <div
+                            class="col-start-3 col-end-8 row-span-4 md:col-start-1 md:col-end-6 md:row-start-3 md:row-end-7 border-8 border-green-600 flex items-center justify-center">
                             <div>
-                                <div><span>Salle de conférence</span>
+                                <div>
+                                    <span>Salle de conférence</span>
                                     <button id="conferenceBtn"
-                                        class="ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                        class="ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
                                 <div id="conférenceContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-
-
                                 </div>
                             </div>
                         </div>
 
-
-
                         <div id="serveursbgcolor"
-                            class=" row-start-7 row-end-10 col-span-2 md:col-start-7 md:ml-14 md:mr-8 md:col-end-10 md:row-start-1 md:row-end-3 border-8 border-blue-600 flex items-center justify-center bg-red-100">
+                            class="row-start-7 row-end-10 col-span-2 md:col-start-7 md:ml-14 md:mr-8 md:col-end-10 md:row-start-1 md:row-end-3 border-8 border-blue-600 flex items-center justify-center bg-red-100">
                             <div>
                                 <div>
                                     <span>Salle des serveurs</span>
                                     <button id="serveursBtn"
-                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
-                                <div id="serveursContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-
-
-                                </div>
+                                <div id="serveursContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full"></div>
                             </div>
                         </div>
 
@@ -90,30 +74,25 @@
                                 <div>
                                     <span>Salle de sécurité</span>
                                     <button id="securiteBtn"
-                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
-                                <div id="sécuritéContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-
-
-                                </div>
+                                <div id="sécuritéContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full"></div>
                             </div>
-
                         </div>
 
-                        <div id="personnelbgcolor"
-                            class="row-start-7 row-end-10 col-start-5 col-end-8 md:col-start-8 md:col-end-10 md:row-start-5 md:row-end-7 border-8 border-pink-800 flex items-center justify-center bg-red-100">
+                        <div
+                            class="row-start-7 row-end-10 col-start-5 col-end-8 md:col-start-8 md:col-end-10 md:row-start-5 md:row-end-7 border-8 border-pink-800 flex items-center justify-center">
                             <div>
                                 <div>
                                     <span>Salle du personnel</span>
                                     <button id="personnelBtn"
-                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
-                                <div id="personnelContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-
-
-                                </div>
+                                <div id="personnelContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full"></div>
                             </div>
                         </div>
 
@@ -123,36 +102,34 @@
                                 <div>
                                     <span>Salle d’archives</span>
                                     <button id="archivesBtn"
-                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">+</button>
+                                        class="addStaffBtn ml-2 w-8 h-8 rounded-full bg-green-600 text-white">
+                                        +
+                                    </button>
                                 </div>
-                                <div id="archivesContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
-
-
-
-                                </div>
+                                <div id="archivesContainer" class="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full"></div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
     <section id="popup" class="hidden fixed inset-0 bg-black/30 flex items-start justify-center">
         <div class="bg-white rounded-2xl w-[35em] p-6 mt-4">
             <div class="flex justify-between items-center pb-3 mb-4">
-                <h2 class="text-xl font-bold text-gray-800">Ajouter un utilisateur</h2>
-                <button id="exitPopup" class="text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+                <h2 class="text-xl font-bold text-gray-800">
+                    Ajouter un utilisateur
+                </h2>
+                <button id="exitPopup" class="text-gray-500 hover:text-red-600 text-2xl font-bold">
+                    &times;
+                </button>
             </div>
 
             <form id="user-form" class="space-y-5 overflow-auto max-h-[72vh]">
-
                 <div>
                     <label class="block text-gray-700 font-semibold mb-1">Nom</label>
                     <input type="text" placeholder="Entrez le nom" id="userNom"
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
                 </div>
 
                 <div>
@@ -162,7 +139,7 @@
                         <option value=""></option>
                         <option value="Réception">Réception</option>
                         <option value="IT Technique">IT Technique</option>
-                        <option value="sécurité ">sécurité </option>
+                        <option value="sécurité ">sécurité</option>
                         <option value="Manager">Manager</option>
                         <option value="Nettoyage">Nettoyage</option>
                         <option value="Visiteurs">Visiteurs</option>
@@ -173,23 +150,23 @@
                     <label class="block text-gray-700 font-semibold mb-1">Photo (URL)</label>
                     <div class="flex items-center gap-3">
                         <input type="url" id="image-url" placeholder="Enter image URL"
-                            class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
 
                         <img id="image" src="/images/user.png" alt="Preview"
-                            class="w-12 h-12 object-cover rounded-full">
+                            class="w-12 h-12 object-cover rounded-full" />
                     </div>
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-semibold mb-1">Email</label>
                     <input type="email" placeholder="Entrez le email" id="userEmail"
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
                 </div>
 
                 <div>
                     <label class="block text-gray-700 font-semibold mb-1">Phone</label>
                     <input type="tel" placeholder="Entrez le numéro de téléphone" id="userPhone"
-                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
                 </div>
 
                 <div class="mb-4">
@@ -202,13 +179,13 @@
                                     <label class="text-sm font-semibold">Poste</label>
                                     <input type="text" id="userPost" name="poste[]"
                                         class="w-full mt-1 px-3 py-2 border rounded-lg"
-                                        placeholder="Ex: Développeur Web">
+                                        placeholder="Ex: Développeur Web" />
                                 </div>
 
                                 <div>
                                     <label class="text-sm font-medium">Entreprise</label>
                                     <input type="text" name="entreprise[]" id="userEntreprise"
-                                        class="w-full mt-1 px-3 py-2 border rounded-lg" placeholder="Ex: YouCode">
+                                        class="w-full mt-1 px-3 py-2 border rounded-lg" placeholder="Ex: YouCode" />
                                 </div>
                             </div>
 
@@ -216,12 +193,13 @@
                                 <div>
                                     <label class="text-sm font-semibold">Date début</label>
                                     <input type="date" id="userDateStart"
-                                        class="w-full mt-1 px-3 py-2 border rounded-lg">
+                                        class="w-full mt-1 px-3 py-2 border rounded-lg" />
                                 </div>
 
                                 <div>
                                     <label class="text-sm font-semibold">Date fin</label>
-                                    <input type="date" id="userDateEnd" class="w-full mt-1 px-3 py-2 border rounded-lg">
+                                    <input type="date" id="userDateEnd"
+                                        class="w-full mt-1 px-3 py-2 border rounded-lg" />
                                 </div>
                             </div>
 
@@ -245,7 +223,6 @@
                         </button>
                     </div>
                 </div>
-
             </form>
         </div>
     </section>
@@ -253,11 +230,12 @@
         <div class="bg-white p-4 rounded w-[400px] overflow-auto max-h-[72vh]">
             <div class="flex justify-between items-center pb-3 mb-4">
                 <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
-                <button id="closeModal" class="text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+                <button id="closeModal" class="text-gray-500 hover:text-red-600 text-2xl font-bold">
+                    &times;
+                </button>
             </div>
 
-
-            <img id="profilePhoto" class="w-32 h-32 object-cover rounded-full mx-auto">
+            <img id="profilePhoto" class="w-32 h-32 object-cover rounded-full mx-auto" />
 
             <div class="text-center space-y-2 mt-4">
                 <h1 id="profileRoom"></h1>
@@ -272,18 +250,15 @@
             </div>
         </div>
     </div>
-    <div class=" hidden fixed inset-0 bg-black/50 flex items-center justify-center" id="staffPopup">
+    <div class="hidden fixed inset-0 bg-black/50 flex items-center justify-center" id="staffPopup">
         <div class="bg-white p-4 rounded w-[50em] overflow-auto max-h-[72vh]">
             <div class="flex justify-between items-center pb-3 mb-4">
                 <h2 class="text-xl font-semibold text-gray-800">Profile</h2>
-                <button id="closeStaffPopup"
-                    class="text-gray-500 hover:text-red-600 text-2xl font-bold">&times;</button>
+                <button id="closeStaffPopup" class="text-gray-500 hover:text-red-600 text-2xl font-bold">
+                    &times;
+                </button>
             </div>
-            <div class=" grid grid-cols-1 md:grid-cols-2 gap-3" id="addStaffToRoom">
-
-
-            </div>
-
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="addStaffToRoom"></div>
         </div>
     </div>
 </body>
