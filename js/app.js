@@ -40,6 +40,48 @@ let counterPersonnelBtn = 0;
 
 let counterArchivesBtn = 0;
 
+function reloadUnssignedUsers() {
+	const savedUsers = JSON.parse(localStorage.getItem("Users")) || [];
+
+	const unssignedUsers = savedUsers.filter((u) => u.unssigned === true);
+
+	allUsers = unssignedUsers;
+
+	const container = document.getElementById("usersToAdd");
+	container.innerHTML = "";
+
+	unssignedUsers.forEach((user) => {
+		const div = document.createElement("div");
+		div.className =
+			"AddBtnToContainer flex items-center justify-between px-4 py-3 border rounded-lg";
+
+		div.innerHTML = `
+            <div class="flex items-center gap-3">
+                <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
+                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
+            </div>
+        `;
+
+		container.appendChild(div);
+	});
+}
+
+function refreshPage() {
+	const savedUsers = JSON.parse(localStorage.getItem("Users")) || [];
+
+	savedUsers.forEach((u) => {
+		if (u.unssigned === false) {
+			u.unssigned = true;
+		}
+	});
+
+	localStorage.setItem("Users", JSON.stringify(savedUsers));
+
+	reloadUnssignedUsers();
+}
+
+refreshPage();
+
 exitPopup.addEventListener("click", () => {
 	popup.classList.add("hidden");
 });
@@ -104,34 +146,6 @@ addExperienceBtn.addEventListener("click", () => {
 		block.remove();
 	});
 });
-
-function reloadUnssignedUsers() {
-	const savedUsers = JSON.parse(localStorage.getItem("Users")) || [];
-
-	const unssignedUsers = savedUsers.filter((u) => u.unssigned === true);
-
-	allUsers = unssignedUsers;
-
-	const container = document.getElementById("usersToAdd");
-	container.innerHTML = "";
-
-	unssignedUsers.forEach((user) => {
-		const div = document.createElement("div");
-		div.className =
-			"AddBtnToContainer flex items-center justify-between px-4 py-3 border rounded-lg";
-
-		div.innerHTML = `
-            <div class="flex items-center gap-3">
-                <img src="${user.photoUrl}" class="w-10 h-10 rounded-full object-cover border">
-                <span class="text-sm font-semibold text-gray-800">${user.nom}</span>
-            </div>
-        `;
-
-		container.appendChild(div);
-	});
-}
-
-reloadUnssignedUsers();
 
 submitBtn.addEventListener("click", (e) => {
 	e.preventDefault();
