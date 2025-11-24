@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title></title>
-
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -15,17 +13,20 @@
             <aside class="w-full lg:w-[28em] bg-white rounded p-4 gap-3" id="user">
                 <div class="flex items-center justify-between">
                     <h2 class="text-sm font-bold">Unassigned Staff</h2>
-                    <button id="addFormStaff" class="px-3 py-1 rounded bg-indigo-600 text-white text-xs">
+                    <button id="addFormStaff" class="px-3 py-1 rounded bg-blue-600 text-white text-xs">
                         Add
                     </button>
                 </div>
 
-                <div class="mt-4 space-y-3 overflow-auto max-h-[72vh]" id="usersToAdd"></div>
+                <div class="mt-4 space-y-3 overflow-auto max-h-[72vh]" id="usersToAdd">
+
+                </div>
             </aside>
 
             <section class="xl:w-full">
                 <div class="bg-white rounded shadow p-3 h-[40em] md:h-[82vh]">
-                    <div class="grid grid-cols-6 grid-rows-12 h-full md:grid-cols-11 md:grid-rows-6 border-2 border-black rounded-xl">
+                    <div
+                        class="grid grid-cols-6 grid-rows-12 h-full md:grid-cols-11 md:grid-rows-6 border-2 border-black rounded-xl">
                         <div id="Réceptionbgcolor"
                             class="col-span-2 row-span-4 md:col-span-5 md:row-span-2 border-2 border-black rounded-xl flex items-center justify-center bg-red-100">
                             <div>
@@ -152,8 +153,7 @@
                         <input id="image-url" placeholder="Enter image URL"
                             class="w-full border border-gray-300 rounded-xl px-4 py-2 bg-gray-50 text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
 
-                        <img id="imaget" src="/images/user.png" alt="Preview"
-                            class="w-12 h-12 object-cover rounded-full" />
+                        <img id="imagee" src="" class="w-12 h-12 object-cover rounded-full" />
                     </div>
                 </div>
 
