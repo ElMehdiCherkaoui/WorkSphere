@@ -1199,11 +1199,3 @@ archivesBtn.addEventListener("click", () => {
 		});
 	});
 });
-
-const savedUsers = JSON.parse(localStorage.getItem("Users")) || [];
-
-savedUsers.forEach((u) => {
-	u.experiencesProf.forEach((s) => {
-		console.log(s.poste);
-	});
-});
