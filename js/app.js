@@ -160,8 +160,7 @@ submitBtn.addEventListener("click", (e) => {
 
 	let phonere = /^\+?\d{10,15}$/;
 
-	let urlR =
-		/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
+	let urlR = /^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/;
 
 	let nomR = /^[A-Za-z]+$/;
 
@@ -211,8 +210,7 @@ submitBtn.addEventListener("click", (e) => {
 		unssigned: true,
 	};
 
-	const experienceBlocks =
-		experienceContainer.querySelectorAll(".formExperience");
+	const experienceBlocks = experienceContainer.querySelectorAll(".formExperience");
 
 	experienceBlocks.forEach((b, index) => {
 		let poste, entreprise, dateStart, dateEnd, description;
@@ -255,7 +253,7 @@ submitBtn.addEventListener("click", (e) => {
 
 		if (!entreprisere.test(entreprise)) {
 			alert("entreprise is invalid");
-
+			preventDefault();
 			return;
 		}
 
@@ -269,7 +267,7 @@ submitBtn.addEventListener("click", (e) => {
 
 		if (!descriptionre.test(description)) {
 			alert("description is invalid");
-
+			preventDefault();
 			return;
 		}
 
@@ -1199,3 +1197,4 @@ archivesBtn.addEventListener("click", () => {
 		});
 	});
 });
+
